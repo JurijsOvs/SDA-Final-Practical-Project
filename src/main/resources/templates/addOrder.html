@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+</head>
+<body>
+
+<div Class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 justify-content-centre card">
+            <h1 class="text-center">Create Order</h1>
+            <div class="card-body">
+                <form method="post" th:action="@{/orders/create}" th:object="${order}">
+                    <div class="form-group">
+                        <label>Contact Info</label>
+                        <input type="text" th:field="*{contactInfo}">
+                        <span th:if="${#fields.hasErrors('contactInfo')}" th:errors="*{contactInfo}" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Delivery Address</label>
+                        <input type="text" th:field="*{deliveryAddress}">
+                        <span th:if="${#fields.hasErrors('deliveryAddress')}" th:errors="*{deliveryAddress}" class="text-danger"></span>
+
+                    </div>
+
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
