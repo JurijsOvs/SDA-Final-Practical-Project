@@ -24,7 +24,7 @@ public class Product {
 
     @NotNull
     @NotEmpty
-    @Length(min = 3, message = "Product Name must be at least 3 characters")
+    @Length(min = 3, message = "Product Name must be at least 3 characters long")
     private String productName;
 
     private Long categoryID;
@@ -38,6 +38,19 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems;
 
-   // private String skuCode;
+    @Lob
+    @Column(nullable = true, length = 64)
+    private byte[] photos;
+
+    private String description;
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+
+        return "../static/product-photos/" + id + "/" + photos;
+    }
+
+
 
 }

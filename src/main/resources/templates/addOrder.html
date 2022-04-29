@@ -17,7 +17,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 justify-content-centre card">
             <h1 class="text-center">Create Order</h1>
             <div class="card-body">
-                <form method="post" th:action="@{/orders/create}" th:object="${order}">
+                <form method="post" th:action="@{/orders/create}" th:object="${order}" >
                     <div class="form-group">
                         <label>Contact Info</label>
                         <input type="text" th:field="*{contactInfo}">
@@ -31,10 +31,9 @@
 
                     </div>
 
-
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">
-                            Submit
+                            Save
                         </button>
 
                     </div>

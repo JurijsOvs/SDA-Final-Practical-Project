@@ -1,14 +1,21 @@
 package lv.sda.finalproject.controllers;
 
+import lv.sda.finalproject.dto.FileUploadUtil;
 import lv.sda.finalproject.model.Product;
 import lv.sda.finalproject.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/products")
@@ -17,11 +24,22 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Value("${uploadDir}")
+    private String uploadFolder;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 
     @GetMapping("/all")
     public String getAllProducts(final ModelMap modelMap){
         modelMap.addAttribute("products", productService.findAllProducts());
         return "viewProducts";
+    }
+
+    @GetMapping("/clientView")
+    public String showAllProducts(final ModelMap modelMap){
+        modelMap.addAttribute("clientProducts", productService.findAllProducts());
+        return "clientViewProducts";
     }
 
     @GetMapping("/add")
@@ -33,16 +51,23 @@ public class ProductController {
 
     @PostMapping("/add")
     public String createProduct(@Valid @ModelAttribute ("product")Product productForm,
-                            Errors errors, ModelMap model){
+                                      Errors errors, ModelMap model, @RequestParam ("image")MultipartFile multipartFile) throws IOException {
     if(errors.hasErrors()){
         model.addAttribute("error", "Error! Please check and try again.");
-        return "addProduct";
+      //  return "addProduct";
     }
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        productForm.setPhotos(fileName);
 
-    productService.save(productForm);
-    //model.addAttribute("products", productService.findAllProducts());
+        productService.save(productForm);
 
-    return "redirect:/products/all";
+        Product savedProduct = productForm;
+
+        String uploadDir = "C:/Java/final-practical-project/src/main/resources/static/product-photos/" + savedProduct.getId();
+
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+    return  "redirect:/products/all";
 
     }
 
