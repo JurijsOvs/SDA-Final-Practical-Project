@@ -17,7 +17,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 justify-content-centre card">
                 <h1 class="text-center">Add Product</h1>
                 <div class="card-body">
-                    <form method="post" th:action="@{/products/add}" th:object="${product}">
+                    <form method="post" th:action="@{/products/add}" th:object="${product}" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Product Name</label>
                             <input type="text" th:field="*{productName}">
@@ -29,6 +29,8 @@
                             <input type="text" th:field="*{price}">
                             <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></span>
 
+
+
                         </div>
 
                         <div class="form-group">
@@ -37,9 +39,15 @@
                             <span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="text-danger"></span>
                         </div>
 
+                        <div>
+                            <label>Photos: </label>
+                            <input type="file" name="image" accept="image/png, image/jpeg">
+
+                        </div>
+
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">
-                                Submit
+                                Save
                             </button>
 
                         </div>

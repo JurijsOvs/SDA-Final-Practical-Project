@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <h1>Product List</h1>
+
+    </div>
+
+    <img src="../static/product-photos/39/testCar4.jpg" width="64" th:src="@{product-photos/39/testCar4.jpg}"/>
+
+
+
+    <img  width="64" th:src="@{product-photos/40/testCar5.jpg}"/>
+
+
+</div>
+
+    <div class="row">
+
+        <ul>
+            <li>
+                <img th:each="product: ${clientProducts}" th:src="@{${product.getPhotosImagePath()}}" />
+
+            </li>
+
+        </ul>
+
+        <div>
+            <img th:each="product: ${clientProducts}" th:src="@{${product.getPhotosImagePath()}}" />
+
+        </div>
+
+
+    </div>
+
+
+
+
+</body>
+</html>
